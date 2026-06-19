@@ -5,12 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Algo System Terminal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      /* Panel minimize/maximize controls */
+      .panel-menu {
+        position: relative;
+        margin-left: auto;
+      }
+      .panel-menu-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: inherit;
+      }
+      .panel-menu-btn:hover {
+        background: rgba(127, 127, 127, 0.15);
+      }
+      .panel-menu-dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        margin-top: 4px;
+        background: var(--panel-bg, #1c1f26);
+        border: 1px solid rgba(127,127,127,0.3);
+        border-radius: 6px;
+        min-width: 140px;
+        z-index: 20;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        overflow: hidden;
+      }
+      .panel-menu.open .panel-menu-dropdown {
+        display: block;
+      }
+      .panel-menu-dropdown button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: none;
+        padding: 8px 12px;
+        font-size: 13px;
+        cursor: pointer;
+        color: inherit;
+      }
+      .panel-menu-dropdown button:hover {
+        background: rgba(127,127,127,0.15);
+      }
+      .panel.collapsed > *:not(.panel-head),
+      .band.collapsed > *:not(.panel-head) {
+        display: none;
+      }
+      .panel.collapsed, .band.collapsed {
+        padding-bottom: 0;
+      }
+    </style>
   </head>
   <body>
     <header class="topbar">
       <div>
         <h1>Algo System Terminal</h1>
         <p id="connectionText">MT5 offline</p>
+      </div>
+      <div class="panel-menu" id="globalPanelMenu">
+        <button type="button" class="panel-menu-btn" id="globalPanelMenuBtn" title="Panel options">⋮</button>
+        <div class="panel-menu-dropdown">
+          <button type="button" id="expandAllBtn">Maximize all panels</button>
+          <button type="button" id="collapseAllBtn">Minimize all panels</button>
+        </div>
       </div>
       <form id="connectForm" class="connect-form">
         <label>
@@ -66,6 +131,7 @@
           <div class="panel-head">
             <h2>Watchlist</h2>
             <button id="addWatchBtn" class="secondary">Add</button>
+            <button id="clearWatchlistBtn" class="secondary">Clear</button>
           </div>
           <table>
             <thead>
@@ -111,6 +177,7 @@
               <input id="tradeEnabled" type="checkbox">
               <span>Live</span>
             </label>
+            <button id="clearLogsBtn" class="secondary">Clear</button>
           </div>
           <div class="strategy-form">
             <label>Fast EMA<input id="fastEma" type="number" value="9" min="1"></label>
@@ -128,6 +195,7 @@
           <div class="panel-head">
             <h2>Signals</h2>
             <span id="signalsCount">-</span>
+            <button id="clearSignalsBtn" class="secondary">Clear</button>
           </div>
           <table>
             <thead>
@@ -148,6 +216,7 @@
         <div class="panel-head">
           <h2>Order History</h2>
           <span id="ordersCount">-</span>
+          <button id="clearOrdersBtn" class="secondary">Clear</button>
         </div>
         <table>
           <thead>
