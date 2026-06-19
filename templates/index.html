@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algo System Terminal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Algo System Terminal</h1>
+        <p id="connectionText">MT5 offline</p>
+      </div>
+      <form id="connectForm" class="connect-form">
+        <label>
+          Login
+          <input id="mt5Login" type="number" inputmode="numeric" autocomplete="username" placeholder="Account">
+        </label>
+        <label>
+          Password
+          <input id="mt5Password" type="password" autocomplete="current-password" placeholder="Password">
+        </label>
+        <label>
+          Server
+          <input id="mt5Server" autocomplete="off" placeholder="Broker server">
+        </label>
+        <div class="actions">
+          <button id="connectBtn" type="submit">Connect</button>
+          <button id="disconnectBtn" class="secondary" type="button">Disconnect</button>
+        </div>
+      </form>
+    </header>
+
+    <main class="shell">
+      <section class="band quote-band">
+        <form id="symbolForm" class="toolbar">
+          <label>
+            Symbol
+            <input id="symbol" value="{{ default_symbol }}" autocomplete="off">
+          </label>
+          <label>
+            Timeframe
+            <select id="timeframe">
+              {% for tf in ["M1", "M3", "M5", "M15", "M30", "H1", "H4", "D1"] %}
+              <option value="{{ tf }}" {% if tf == default_timeframe %}selected{% endif %}>{{ tf }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            Volume
+            <input id="volume" type="number" min="0.01" step="0.01" value="{{ default_volume }}">
+          </label>
+          <button type="submit">Load</button>
+        </form>
+        <div class="ticker">
+          <div><span>Bid</span><strong id="bid">-</strong></div>
+          <div><span>Ask</span><strong id="ask">-</strong></div>
+          <div><span>Spread</span><strong id="spread">-</strong></div>
+          <div><span>Signal</span><strong id="signal">-</strong></div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Watchlist</h2>
+            <button id="addWatchBtn" class="secondary">Add</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Timeframe</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="watchlistBody"></tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Manual Trade</h2>
+          </div>
+          <div class="trade-buttons">
+            <button id="buyBtn" class="buy">Buy</button>
+            <button id="sellBtn" class="sell">Sell</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Symbol</th>
+                <th>Type</th>
+                <th>Volume</th>
+                <th>Profit</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="positionsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>EMA Strategy</h2>
+            <label class="switch">
+              <input id="tradeEnabled" type="checkbox">
+              <span>Live</span>
+            </label>
+          </div>
+          <div class="strategy-form">
+            <label>Fast EMA<input id="fastEma" type="number" value="9" min="1"></label>
+            <label>Slow EMA<input id="slowEma" type="number" value="21" min="2"></label>
+            <label>Poll sec<input id="pollSeconds" type="number" value="10" min="1"></label>
+          </div>
+          <div class="actions left">
+            <button id="startStrategyBtn">Start</button>
+            <button id="stopStrategyBtn" class="secondary">Stop</button>
+          </div>
+          <pre id="logs" class="logs"></pre>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Signals</h2>
+            <span id="signalsCount">-</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Symbol</th>
+                <th>TF</th>
+                <th>Signal</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody id="signalsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="panel-head">
+          <h2>Order History</h2>
+          <span id="ordersCount">-</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Symbol</th>
+              <th>Side</th>
+              <th>Volume</th>
+              <th>Ticket</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </section>
+
+      <section class="band">
+        <div class="panel-head">
+          <h2>Candles</h2>
+          <span id="lastUpdate">-</span>
+        </div>
+        <div class="candles" id="candles"></div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
