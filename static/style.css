@@ -20,7 +20,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font: 14px/1.45 "Segoe UI", Arial, sans-serif;
+  font: 14px/1.2 "Segoe UI", Arial, sans-serif;
 }
 
 button,
@@ -32,7 +32,7 @@ select {
 button {
   border: 1px solid transparent;
   border-radius: 6px;
-  padding: 9px 14px;
+  padding: 5px 10px;
   background: var(--accent);
   color: #07111d;
   font-weight: 700;
@@ -71,12 +71,12 @@ select {
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
-  padding: 9px 10px;
+  padding: 5px 8px;
 }
 
 label {
   display: grid;
-  gap: 5px;
+  gap: 3px;
   color: var(--muted);
   font-size: 12px;
   letter-spacing: 0;
@@ -88,9 +88,9 @@ label {
   z-index: 10;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px;
   align-items: center;
-  padding: 16px 24px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--line);
   background: rgba(17, 19, 21, 0.95);
 }
@@ -117,27 +117,27 @@ h2 {
 
 .actions {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   align-items: center;
 }
 
 .connect-form {
   display: grid;
   grid-template-columns: 120px 140px 170px auto;
-  gap: 10px;
+  gap: 5px;
   align-items: end;
   max-width: 720px;
 }
 
 .actions.left {
   justify-content: flex-start;
-  margin-top: 14px;
+  margin-top: 7px;
 }
 
 .shell {
   display: grid;
-  gap: 18px;
-  padding: 18px 24px 28px;
+  gap: 9px;
+  padding: 9px 12px 14px;
 }
 
 .band,
@@ -148,18 +148,18 @@ h2 {
 }
 
 .band {
-  padding: 16px;
+  padding: 8px;
 }
 
 .quote-band {
   display: grid;
-  gap: 14px;
+  gap: 7px;
 }
 
 .toolbar {
   display: grid;
   grid-template-columns: 1.4fr 120px 120px auto;
-  gap: 12px;
+  gap: 6px;
   align-items: end;
 }
 
@@ -175,8 +175,8 @@ h2 {
 
 .ticker div {
   display: grid;
-  gap: 6px;
-  padding: 12px;
+  gap: 3px;
+  padding: 6px;
   background: var(--surface-2);
 }
 
@@ -192,27 +192,27 @@ h2 {
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 0.8fr);
-  gap: 18px;
+  gap: 9px;
 }
 
 .panel {
-  padding: 16px;
+  padding: 8px;
 }
 
 .panel-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 6px;
+  margin-bottom: 7px;
 }
 
 .trade-buttons,
 .strategy-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 5px;
+  margin-bottom: 7px;
 }
 
 .strategy-form {
@@ -239,7 +239,7 @@ table {
 th,
 td {
   border-top: 1px solid var(--line);
-  padding: 10px 8px;
+  padding: 5px 6px;
   text-align: left;
   white-space: nowrap;
 }
@@ -257,8 +257,8 @@ th {
 .logs {
   height: 220px;
   overflow: auto;
-  margin: 14px 0 0;
-  padding: 12px;
+  margin: 7px 0 0;
+  padding: 6px;
   border-radius: 6px;
   background: #0b0d0f;
   border: 1px solid #222930;
@@ -268,14 +268,14 @@ th {
 .candles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
-  gap: 8px;
+  gap: 4px;
 }
 
 .candle {
-  min-height: 78px;
+  min-height: 70px;
   border: 1px solid var(--line);
   border-radius: 6px;
-  padding: 8px;
+  padding: 4px;
   background: var(--surface-2);
 }
 
@@ -296,7 +296,7 @@ th {
 
 .candle strong {
   display: block;
-  margin: 4px 0;
+  margin: 2px 0;
   font-size: 14px;
 }
 

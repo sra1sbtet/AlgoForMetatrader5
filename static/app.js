@@ -301,6 +301,86 @@ $("#stopStrategyBtn").addEventListener("click", async () => {
   await refresh();
 });
 
+function closeAllPanelMenus(except) {
+  document.querySelectorAll(".panel-menu.open").forEach((menu) => {
+    if (menu !== except) menu.classList.remove("open");
+  });
+}
+
+function initPanelMenus() {
+  // Inject a three-dot menu into every panel/band that has a .panel-head
+  document.querySelectorAll(".panel, .band").forEach((container) => {
+    const head = container.querySelector(".panel-head");
+    if (!head || head.dataset.menuReady) return;
+    head.dataset.menuReady = "true";
+
+    const menu = document.createElement("div");
+    menu.className = "panel-menu";
+    menu.innerHTML = `
+      <button type="button" class="panel-menu-btn" title="Panel options">⋮</button>
+      <div class="panel-menu-dropdown">
+        <button type="button" data-action="toggle">Minimize</button>
+      </div>
+    `;
+    head.appendChild(menu);
+
+    const toggleBtn = menu.querySelector(".panel-menu-btn");
+    const actionBtn = menu.querySelector('[data-action="toggle"]');
+
+    toggleBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = menu.classList.contains("open");
+      closeAllPanelMenus();
+      menu.classList.toggle("open", !isOpen);
+    });
+
+    actionBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const collapsed = container.classList.toggle("collapsed");
+      actionBtn.textContent = collapsed ? "Maximize" : "Minimize";
+      menu.classList.remove("open");
+    });
+  });
+
+  document.addEventListener("click", () => closeAllPanelMenus());
+}
+
+function setAllPanelsCollapsed(collapsed) {
+  document.querySelectorAll(".panel, .band").forEach((container) => {
+    container.classList.toggle("collapsed", collapsed);
+    const actionBtn = container.querySelector('[data-action="toggle"]');
+    if (actionBtn) actionBtn.textContent = collapsed ? "Maximize" : "Minimize";
+  });
+}
+
+function initGlobalPanelMenu() {
+  const menu = $("#globalPanelMenu");
+  const btn = $("#globalPanelMenuBtn");
+  if (!menu || !btn) return;
+
+  btn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = menu.classList.contains("open");
+    closeAllPanelMenus();
+    menu.classList.toggle("open", !isOpen);
+  });
+
+  $("#collapseAllBtn").addEventListener("click", (event) => {
+    event.stopPropagation();
+    setAllPanelsCollapsed(true);
+    menu.classList.remove("open");
+  });
+
+  $("#expandAllBtn").addEventListener("click", (event) => {
+    event.stopPropagation();
+    setAllPanelsCollapsed(false);
+    menu.classList.remove("open");
+  });
+}
+
+initPanelMenus();
+initGlobalPanelMenu();
+
 refresh();
 refreshHistory();
 setInterval(refresh, 3000);
